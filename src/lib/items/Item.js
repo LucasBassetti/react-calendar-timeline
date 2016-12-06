@@ -5,39 +5,6 @@ import moment from 'moment'
 import { _get, deepObjectCompare } from '../utils'
 
 export default class Item extends Component {
-  // removed prop type check for SPEED!
-  // they are coming from a trusted component anyway
-  // (this complicates performance debugging otherwise)
-  static propTypes = {
-    // canvasTimeStart: React.PropTypes.number.isRequired,
-    // canvasTimeEnd: React.PropTypes.number.isRequired,
-    // canvasWidth: React.PropTypes.number.isRequired,
-    // lineHeight: React.PropTypes.number.isRequired,
-    // order: React.PropTypes.number.isRequired,
-    //
-    // dragSnap: React.PropTypes.number,
-    // minResizeWidth: React.PropTypes.number,
-    // selected: React.PropTypes.bool,
-    //
-    // canChangeGroup: React.PropTypes.bool.isRequired,
-    // canMove: React.PropTypes.bool.isRequired,
-    // canResizeLeft: React.PropTypes.bool.isRequired,
-    // canResizeRight: React.PropTypes.bool.isRequired,
-    //
-    // keys: React.PropTypes.object.isRequired,
-    // item: React.PropTypes.object.isRequired,
-    //
-    // onSelect: React.PropTypes.func,
-    // onDrag: React.PropTypes.func,
-    // onDrop: React.PropTypes.func,
-    // onResizing: React.PropTypes.func,
-    // onResized: React.PropTypes.func,
-    // onContextMenu: React.PropTypes.func
-  }
-  static defaultProps = {
-    selected: false
-  }
-
   constructor (props) {
     super(props)
 
@@ -57,6 +24,13 @@ export default class Item extends Component {
       resizeStart: null,
       resizeTime: null
     }
+
+    this.onMouseDown = this.onMouseDown.bind(this)
+    this.onMouseUp = this.onMouseUp.bind(this)
+    this.onTouchStart = this.onTouchStart.bind(this)
+    this.onTouchEnd = this.onTouchEnd.bind(this)
+    this.handleDoubleClick = this.handleDoubleClick.bind(this)
+    this.handleContextMenu = this.handleContextMenu.bind(this)
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -371,35 +345,35 @@ export default class Item extends Component {
     }
   }
 
-  onMouseDown = (e) => {
+  onMouseDown (e) {
     if (!this.state.interactMounted) {
       e.preventDefault()
       this.startedClicking = true
     }
   };
 
-  onMouseUp = (e) => {
+  onMouseUp (e) {
     if (!this.state.interactMounted && this.startedClicking) {
       this.startedClicking = false
       this.actualClick(e, 'click')
     }
   };
 
-  onTouchStart = (e) => {
+  onTouchStart (e) {
     if (!this.state.interactMounted) {
       e.preventDefault()
       this.startedTouching = true
     }
   };
 
-  onTouchEnd = (e) => {
+  onTouchEnd (e) {
     if (!this.state.interactMounted && this.startedTouching) {
       this.startedTouching = false
       this.actualClick(e, 'touch')
     }
   };
 
-  handleDoubleClick = (e) => {
+  handleDoubleClick (e) {
     e.preventDefault()
     e.stopPropagation()
     if (this.props.onItemDoubleClick) {
@@ -407,7 +381,7 @@ export default class Item extends Component {
     }
   };
 
-  handleContextMenu = (e) => {
+  handleContextMenu (e) {
     if (this.props.onContextMenu) {
       e.preventDefault()
       e.stopPropagation()
@@ -468,4 +442,37 @@ export default class Item extends Component {
       </div>
     )
   }
+}
+
+// removed prop type check for SPEED!
+// they are coming from a trusted component anyway
+// (this complicates performance debugging otherwise)
+Item.propTypes = {
+  // canvasTimeStart: React.PropTypes.number.isRequired,
+  // canvasTimeEnd: React.PropTypes.number.isRequired,
+  // canvasWidth: React.PropTypes.number.isRequired,
+  // lineHeight: React.PropTypes.number.isRequired,
+  // order: React.PropTypes.number.isRequired,
+  //
+  // dragSnap: React.PropTypes.number,
+  // minResizeWidth: React.PropTypes.number,
+  // selected: React.PropTypes.bool,
+  //
+  // canChangeGroup: React.PropTypes.bool.isRequired,
+  // canMove: React.PropTypes.bool.isRequired,
+  // canResizeLeft: React.PropTypes.bool.isRequired,
+  // canResizeRight: React.PropTypes.bool.isRequired,
+  //
+  // keys: React.PropTypes.object.isRequired,
+  // item: React.PropTypes.object.isRequired,
+  //
+  // onSelect: React.PropTypes.func,
+  // onDrag: React.PropTypes.func,
+  // onDrop: React.PropTypes.func,
+  // onResizing: React.PropTypes.func,
+  // onResized: React.PropTypes.func,
+  // onContextMenu: React.PropTypes.func
+}
+Item.defaultProps = {
+  selected: false
 }

@@ -15,40 +15,6 @@ const canResizeRight = (item, canResize) => {
 }
 
 export default class Items extends Component {
-  static propTypes = {
-    groups: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
-    items: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
-
-    canvasTimeStart: PropTypes.number.isRequired,
-    canvasTimeEnd: PropTypes.number.isRequired,
-    canvasWidth: PropTypes.number.isRequired,
-    lineHeight: PropTypes.number.isRequired,
-
-    dragSnap: PropTypes.number,
-    minResizeWidth: PropTypes.number,
-    selectedItem: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-    canChangeGroup: PropTypes.bool.isRequired,
-    canMove: PropTypes.bool.isRequired,
-    canResize: PropTypes.oneOf([true, false, 'left', 'right', 'both']),
-    canSelect: PropTypes.bool,
-
-    keys: PropTypes.object.isRequired,
-
-    moveResizeValidator: PropTypes.func,
-    itemSelect: PropTypes.func,
-    itemDrag: PropTypes.func,
-    itemDrop: PropTypes.func,
-    itemResizing: PropTypes.func,
-    itemResized: PropTypes.func,
-
-    onItemDoubleClick: PropTypes.func,
-    onItemContextMenu: PropTypes.func
-  }
-
-  static defaultProps = {
-  }
-
   shouldComponentUpdate (nextProps, nextState) {
     return !(arraysEqual(nextProps.groups, this.props.groups) &&
              arraysEqual(nextProps.items, this.props.items) &&
@@ -132,4 +98,38 @@ export default class Items extends Component {
       </div>
     )
   }
+}
+
+Items.propTypes = {
+  groups: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
+  items: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
+
+  canvasTimeStart: PropTypes.number.isRequired,
+  canvasTimeEnd: PropTypes.number.isRequired,
+  canvasWidth: PropTypes.number.isRequired,
+  lineHeight: PropTypes.number.isRequired,
+
+  dragSnap: PropTypes.number,
+  minResizeWidth: PropTypes.number,
+  selectedItem: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+  canChangeGroup: PropTypes.bool.isRequired,
+  canMove: PropTypes.bool.isRequired,
+  canResize: PropTypes.oneOf([true, false, 'left', 'right', 'both']),
+  canSelect: PropTypes.bool,
+
+  keys: PropTypes.object.isRequired,
+
+  moveResizeValidator: PropTypes.func,
+  itemSelect: PropTypes.func,
+  itemDrag: PropTypes.func,
+  itemDrop: PropTypes.func,
+  itemResizing: PropTypes.func,
+  itemResized: PropTypes.func,
+
+  onItemDoubleClick: PropTypes.func,
+  onItemContextMenu: PropTypes.func
+}
+
+Items.defaultProps = {
 }
